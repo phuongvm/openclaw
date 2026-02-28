@@ -4,8 +4,10 @@ import type { OpenClawConfig } from "../../config/config.js";
 export type ApiKeyCredential = {
   type: "api_key";
   provider: string;
-  key: string;
+  key?: string;
   email?: string;
+  /** Optional provider-specific metadata (e.g., account IDs, gateway IDs). */
+  metadata?: Record<string, string>;
 };
 
 export type TokenCredential = {
@@ -32,10 +34,12 @@ export type AuthProfileCredential = ApiKeyCredential | TokenCredential | OAuthCr
 
 export type AuthProfileFailureReason =
   | "auth"
+  | "auth_permanent"
   | "format"
   | "rate_limit"
   | "billing"
   | "timeout"
+  | "model_not_found"
   | "unknown";
 
 /** Per-profile usage statistics for round-robin and cooldown tracking */
